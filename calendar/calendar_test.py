@@ -20,7 +20,7 @@ class CalendarTest(unittest.TestCase):
         cal = Calendar('John')
         cal.add(ev)
 
-        assert ev in cal.events
+        assert ev in cal.events[2012][3][19]
 
     def test_calendar_detect_conflicts(self):
         ev = Event('lunch',

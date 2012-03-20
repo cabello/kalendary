@@ -100,5 +100,14 @@ class EventTest(unittest.TestCase):
         assert ev.conflicts(ev2) == False
         assert ev2.conflicts(ev) == False
 
+    def test_event_is_equal_if_everything_match(self):
+        name = 'meeting'
+        start = datetime(2012, 3, 19, 18, 0)
+        end = datetime(2012, 3, 19, 18, 30)
+        ev = Event(name, start, end)
+        ev2 = Event(name, start, end)
+
+        assert ev == ev2
+
 if __name__ == "__main__":
     unittest.main()

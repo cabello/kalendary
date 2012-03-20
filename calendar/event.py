@@ -26,3 +26,15 @@ class Event(object):
             return True
 
         return False
+
+    def __cmp__(self, other_event):
+        if self.start < other_event.start:
+            return -1
+
+        if (self.name == other_event.name and
+            self.start == other_event.start and
+            self.end == other_event.end):
+            return 0
+
+        if self.start > other_event.start:
+            return 1

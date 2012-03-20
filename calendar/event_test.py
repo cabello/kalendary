@@ -30,71 +30,36 @@ class EventTest(unittest.TestCase):
         assert ev2.conflicts(ev) == False
 
     def test_conflict_other_event_is_inside_of_event(self):
-        name = 'meeting'
-        start = datetime(2012, 3, 19, 18, 0)
-        end = datetime(2012, 3, 19, 19, 45)
-        ev = Event(name, start, end)
-
-        name2 = 'snack'
-        start2 = datetime(2012, 3, 19, 18, 30)
-        end2 = datetime(2012, 3, 19, 19, 0)
-        ev2 = Event(name2, start2, end2)
+        ev = self.new_event(18, 0, 19, 45)
+        ev2 = self.new_event(18, 30, 19, 0)
 
         assert ev.conflicts(ev2) == True
         assert ev2.conflicts(ev) == True
 
-    def test_conflict_event_is_insideof_other_event(self):
-        name = 'meeting'
-        start = datetime(2012, 3, 19, 18, 0)
-        end = datetime(2012, 3, 19, 19, 45)
-        ev = Event(name, start, end)
-
-        name2 = 'snack'
-        start2 = datetime(2012, 3, 19, 18, 30)
-        end2 = datetime(2012, 3, 19, 19, 0)
-        ev2 = Event(name2, start2, end2)
+    def test_conflict_event_is_inside_of_other_event(self):
+        ev = self.new_event(18, 30, 19, 0)
+        ev2 = self.new_event(18, 0, 19, 45)
 
         assert ev.conflicts(ev2) == True
         assert ev2.conflicts(ev) == True
 
     def test_conflict_other_event_is_leftside_of_event(self):
-        name = 'meeting'
-        start = datetime(2012, 3, 19, 18, 0)
-        end = datetime(2012, 3, 19, 19, 45)
-        ev = Event(name, start, end)
-
-        name2 = 'snack'
-        start2 = datetime(2012, 3, 19, 17, 30)
-        end2 = datetime(2012, 3, 19, 18, 15)
-        ev2 = Event(name2, start2, end2)
+        ev = self.new_event(18, 0, 19, 45)
+        ev2 = self.new_event(17, 30, 18, 15)
 
         assert ev.conflicts(ev2) == True
         assert ev2.conflicts(ev) == True
 
     def test_conflict_other_event_is_rightside_of_event(self):
-        name = 'meeting'
-        start = datetime(2012, 3, 19, 18, 0)
-        end = datetime(2012, 3, 19, 19, 45)
-        ev = Event(name, start, end)
-
-        name2 = 'snack'
-        start2 = datetime(2012, 3, 19, 19, 15)
-        end2 = datetime(2012, 3, 19, 20, 00)
-        ev2 = Event(name2, start2, end2)
+        ev = self.new_event(18, 0, 19, 45)
+        ev2 = self.new_event(19, 15, 20, 0)
 
         assert ev.conflicts(ev2) == True
         assert ev2.conflicts(ev) == True
 
     def test_no_conflict_in_following_events(self):
-        name = 'meeting'
-        start = datetime(2012, 3, 19, 18, 0)
-        end = datetime(2012, 3, 19, 18, 30)
-        ev = Event(name, start, end)
-
-        name2 = 'meeting 2'
-        start2 = datetime(2012, 3, 19, 18, 30)
-        end2 = datetime(2012, 3, 19, 19, 00)
-        ev2 = Event(name2, start2, end2)
+        ev = self.new_event(18, 0, 18, 30)
+        ev2 = self.new_event(18, 30, 19, 0)
 
         assert ev.conflicts(ev2) == False
         assert ev2.conflicts(ev) == False
